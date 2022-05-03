@@ -25,7 +25,7 @@ test("gets player's stats as an object", () => {
     expect(player.getStats()).toHaveProperty('agility');
   });
 
-  test('gets inventory from player or returns false', () => {
+test('gets inventory from player or returns false', () => {
       const player = new Player('Dave');
 
       expect(player.getInventory()).toEqual(expect.any(Array));
@@ -34,6 +34,7 @@ test("gets player's stats as an object", () => {
 
       expect(player.getInventory()).toEqual(false);
   });
+  
 test('gets players health value', () => {
     const player = new Player('Dave');
 
@@ -62,3 +63,30 @@ test("subtracts from player's health", () => {
 
     expect(player.health).toBe(0);
 });
+
+test("gets player's attack value", () => {
+    const player = new Player('Dave');
+    player.strength = 10;
+
+    expect(player.getAttackValue()).toBeGreaterThanOrEqual(5);
+    expect(player.getAttackValue()).toBeLessThanOrEqual(15);
+});
+
+test('adds a potion to the inventory', () => {
+    const player = new Player('Dave');
+    const oldCount = player.inventory.length;
+  
+    player.addPotion(new Potion());
+  
+    expect(player.inventory.length).toBeGreaterThan(oldCount);
+  });
+
+  test('uses a potion from inventory', () => {
+    const player = new Player('Dave');
+    player.inventory = [new Potion(), new Potion(), new Potion()];
+    const oldCount = player.inventory.length;
+  
+    player.usePotion(1);
+  
+    expect(player.inventory.length).toBeLessThan(oldCount);
+  });
